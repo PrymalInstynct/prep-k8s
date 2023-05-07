@@ -1,0 +1,6 @@
+---
+# handlers file for prep-k8s
+- name: reboot
+  ansible.builtin.reboot:
+    msg: Rebooting nodes
+    reboot_timeout: 3600

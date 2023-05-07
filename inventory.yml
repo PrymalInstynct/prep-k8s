@@ -1,0 +1,22 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        k8s-control-prod-0:
+          ansible_host: 10.10.1.10
+          dnf_timer_hour: 0
+        k8s-control-prod-1:
+          ansible_host: 10.10.1.11
+          dnf_timer_hour: 1
+        k8s-control-prod-2:
+          ansible_host: 10.10.1.12
+          dnf_timer_hour: 2
+    worker:
+      hosts:
+        k8s-worker-prod-3:
+          ansible_host: 10.10.1.13
+          dnf_timer_hour: 3
+        k8s-worker-prod-4:
+          ansible_host: 10.10.1.14
+          dnf_timer_hour: 4

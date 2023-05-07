@@ -1,0 +1,6 @@
+---
+- name: Prepare Kubernetes Hosts
+  hosts: kubernetes
+  become: true
+  roles:
+    - { role: prep-k8s }

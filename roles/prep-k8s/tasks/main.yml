@@ -1,0 +1,52 @@
+---
+- name: Install Software
+  ansible.builtin.dnf:
+    name:
+      - dnf-automatic
+      - vim
+
+- name: Update dnf-automatic settings
+  ansible.builtin.lineinfile:
+    path: /etc/dnf/automatic.conf
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  loop:
+    - { regexp: 'download_updates = no', line: 'download_updates = yes' }
+    - { regexp: 'apply_updates = no', line: 'apply_updates = yes' }
+    - { regexp: 'emit_via = stdio', line: 'emit_via = motd' }
+
+- name: Create dnf-automatic.timer.d directory
+  file:
+    path: /etc/systemd/system/dnf-automatic.timer.d/
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Apply dnf-automatic.timer override
+  copy:
+    content: |
+      [Timer]
+      OnCalendar=*-*-* {{ dnf_timer_hour }}:00
+      RandomizedDelaySec=15m
+    dest: /etc/systemd/system/dnf-automatic.timer.d/override.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Systemctl daemon-reload
+  ansible.builtin.systemd:
+    daemon-reload: yes
+
+- name: Start dnf-automatic systemctl time
+  ansible.builtin.systemd:
+    name: dnf-automatic.timer
+    state: restarted
+    enabled: true
+
+- name: Patch OS
+  ansible.builtin.dnf:
+    name: '*'
+    state: latest
+    update_cache: true
+  notify: reboot
