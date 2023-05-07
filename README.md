@@ -59,6 +59,14 @@ kubernetes:
           ansible_host: 10.10.1.14
           dnf_timer_hour: 4
 ```
+
+Example Playbook Execution
+--------------------------
+
+```
+ansible-playbook -i inventory.yml playbook/prep-k8s.yml -K
+```
+
 License
 -------
 
