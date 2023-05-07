@@ -1,2 +1,2 @@
 ---
-# defaults file for prep-k8s
+dnf_timer_hour: 0
