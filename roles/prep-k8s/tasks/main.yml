@@ -5,6 +5,11 @@
       - dnf-automatic
       - vim
 
+- name: Set timezone to America/Denver
+  community.general.timezone:
+    name: "{{ timezone }}"
+    hwclock: UTC
+
 - name: Update dnf-automatic settings
   ansible.builtin.lineinfile:
     path: /etc/dnf/automatic.conf
@@ -41,7 +46,7 @@
 - name: Start dnf-automatic systemctl time
   ansible.builtin.systemd:
     name: dnf-automatic.timer
-    state: restarted
+    state: started
     enabled: true
 
 - name: Patch OS

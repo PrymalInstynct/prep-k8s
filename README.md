@@ -14,6 +14,7 @@ Role Variables
 | Variable | Default | Description |
 | -------- | ------- | ----------- |
 | dnf_timer_hour | 0 | Hour 0-23 for when you would like to execute the dnf-automation.timer systemd service file |
+| timezone | America/Denver | Sets timezone on hosts |
 
 Dependencies
 ------------

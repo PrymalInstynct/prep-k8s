@@ -1,2 +1,3 @@
 ---
 dnf_timer_hour: 0
+timezone: America/Denver
